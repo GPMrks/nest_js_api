@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject, UseFilters } from "@nestjs/common";
 import { UpdateUserDTO } from "./dto/update-user.dto";
 import { UpdateUserPartialDTO } from "./dto/update-user-partial.dto";
 import { UserServiceImpl } from "./service/impl/user.service.impl";
 import { User } from "./entity/User";
 import { UserService } from "./service/user.service";
+import { UserNotFoundExceptionHandler } from "./exception/user-not-found.exception.handler";
 
 @Controller("users")
+@UseFilters(new UserNotFoundExceptionHandler())
 export class UserController {
 
     constructor(@Inject("UserService") private readonly userService: UserService) {

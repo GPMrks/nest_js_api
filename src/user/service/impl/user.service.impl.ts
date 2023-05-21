@@ -5,6 +5,7 @@ import { User } from "../../entity/User";
 import { UpdateUserDTO } from "../../dto/update-user.dto";
 import { UpdateUserPartialDTO } from "../../dto/update-user-partial.dto";
 import { UserService } from "../user.service";
+import { UserNotFoundException } from "src/user/exception/user-not-found.exception";
 
 @Injectable()
 export class UserServiceImpl implements UserService {
@@ -76,7 +77,7 @@ export class UserServiceImpl implements UserService {
 
     private async verifyIfUserExistsWithId(id: number) {
         if (!(await this.prisma.user.findUnique({where: {id}}))) {
-            throw new NotFoundException("User not found with ID: " + id);
+            throw new UserNotFoundException(id);
         } else {
             return this.prisma.user.findUnique({where: {id}});
         }
