@@ -1,5 +1,5 @@
-import { IsEmail, IsString, IsStrongPassword, Min } from "class-validator";
-import { CreateUserDTO } from "../dto/create-user.dto";
+import { IsDateString, IsEmail, IsOptional, IsString, IsStrongPassword, Min, isDateString } from "class-validator";
+import { UserDTO } from "../dto/user.dto";
 
 export class User {
 
@@ -18,10 +18,15 @@ export class User {
     })
     password: string;
 
-    static toDTO(user: User): CreateUserDTO {
-        const userDto = new CreateUserDTO();
+    @IsOptional()
+    @IsDateString()
+    birthday: string;
+
+    static toDTO(user: User): UserDTO {
+        const userDto = new UserDTO();
         userDto.name = user.name;
         userDto.email = user.email;
+        userDto.birthday = user.birthday;
         return userDto;
     }
 }
