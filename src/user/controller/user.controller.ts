@@ -1,14 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject, UseFilters } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject, UseFilters, Res, UseInterceptors } from "@nestjs/common";
 import { UpdateUserDTO } from "../dto/update-user.dto";
 import { UpdateUserPartialDTO } from "../dto/update-user-partial.dto";
-import { UserServiceImpl } from "../service/impl/user.service.impl";
 import { User } from "../entity/User";
 import { UserService } from "../service/user.service";
 import { UserNotFoundExceptionHandler } from "../exception/user-not-found.exception.handler";
-import { ApiHeader, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { LogInterceptor } from "src/interceptor/log.interceptor";
 
 @ApiTags('User')
 @Controller("users")
+@UseInterceptors(LogInterceptor)
 @UseFilters(new UserNotFoundExceptionHandler())
 export class UserController {
 
