@@ -76,7 +76,7 @@ export class UserServiceImpl implements UserService {
     }
 
     private async verifyIfUserExistsWithId(id: number) {
-        if (!(await this.prisma.user.findUnique({where: {id}}))) {
+        if (!(await this.prisma.user.count({where: {id}}))) {
             throw new UserNotFoundException(id);
         } else {
             return this.prisma.user.findUnique({where: {id}});
