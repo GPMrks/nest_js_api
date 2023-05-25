@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject, UseFilters, Res, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Patch, Delete, ParseIntPipe, HttpStatus, HttpCode, Inject, UseFilters, UseInterceptors } from "@nestjs/common";
 import { UpdateUserDTO } from "../dto/update-user.dto";
 import { UpdateUserPartialDTO } from "../dto/update-user-partial.dto";
 import { User } from "../entity/User";
 import { UserService } from "../service/user.service";
 import { UserNotFoundExceptionHandler } from "../exception/user-not-found.exception.handler";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ParamId } from "src/decorators/param-id.decorator";
 import { LogInterceptor } from "src/interceptor/log.interceptor";
 
 @ApiTags('User')
@@ -27,7 +28,8 @@ export class UserController {
     @Get(":id")
     @HttpCode(HttpStatus.OK)
     @ApiOperation({summary: "Retrieves an User", description: "Returns an specific User by its ID"})
-    async getUserById(@Param("id", ParseIntPipe) id: number) {
+    async getUserById(@ParamId() id: number) {
+        console.log({id});
         return this.userService.getUserById(id);
     }
 
@@ -41,21 +43,21 @@ export class UserController {
     @Put(":id")
     @HttpCode(HttpStatus.OK)
     @ApiOperation({summary: "Updates an User Entirely", description: "Updates every field of an User by its ID"})
-    async updateUser(@Param("id", ParseIntPipe) id: number, @Body() user: UpdateUserDTO) {
+    async updateUser(@ParamId() id: number, @Body() user: UpdateUserDTO) {
         return this.userService.updateUserById(id, user);
     }
 
     @Patch(":id")
     @HttpCode(HttpStatus.OK)
     @ApiOperation({summary: "Updates Partially the User Entry", description: "Updates only the given fields of a specific User by its ID"})
-    async updatePartialUser(@Param("id", ParseIntPipe) id: number, @Body() user: UpdateUserPartialDTO) {
+    async updatePartialUser(@ParamId() id: number, @Body() user: UpdateUserPartialDTO) {
         return this.userService.updateUserPartiallyById(id, user);
     }
 
     @Delete(":id")
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiOperation({summary: "Deletes an User", description: "Deletes an User by its ID"})
-    async deleteUser(@Param("id", ParseIntPipe) id: number) {
+    async deleteUser(@ParamId() id: number) {
         return this.userService.deleteUserById(id);
     }
 
