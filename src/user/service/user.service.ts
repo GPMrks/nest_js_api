@@ -1,11 +1,10 @@
 import { UpdateUserPartialDTO } from "../dto/update-user-partial.dto";
 import { UpdateUserDTO } from "../dto/update-user.dto";
-import { UserDTO } from "../dto/user.dto";
 import { User } from "../entity/User";
 
 export interface UserService {
 
-    createUser(user: User): Promise<UserDTO>;
+    createUser(user: User);
 
     getAllUsers();
 

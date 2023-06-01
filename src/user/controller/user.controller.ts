@@ -5,8 +5,8 @@ import { User } from "../entity/User";
 import { UserService } from "../service/user.service";
 import { UserNotFoundExceptionHandler } from "../exception/user-not-found.exception.handler";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { ParamId } from "src/decorators/param-id.decorator";
-import { LogInterceptor } from "src/interceptor/log.interceptor";
+import { ParamId } from "src/utils/decorators/param-id.decorator";
+import { LogInterceptor } from "src/utils/interceptor/log.interceptor";
 
 @ApiTags('User')
 @Controller("users")

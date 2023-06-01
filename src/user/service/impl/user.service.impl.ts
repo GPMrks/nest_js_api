@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, Param } from "@nestjs/common";
 import { UserDTO } from "../../dto/user.dto";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "src/repository/prisma/prisma.service";
 import { User } from "../../entity/User";
 import { UpdateUserDTO } from "../../dto/update-user.dto";
 import { UpdateUserPartialDTO } from "../../dto/update-user-partial.dto";
@@ -14,7 +14,7 @@ export class UserServiceImpl implements UserService {
 
     }
 
-    async createUser(user: User): Promise<UserDTO> {
+    async createUser(user: User) {
         await this.prisma.user.create({
             data: user
         });
